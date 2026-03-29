@@ -1,119 +1,176 @@
-# RideSharingDB System
+<div align="center">
 
-> Complete SQL Server database for a ride-sharing service with full lifecycle management, automation, and data integrity.
+<img src="https://img.shields.io/badge/SQL%20Server-2019%2B-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white"/>
+<img src="https://img.shields.io/badge/T--SQL-T--SQL-0078D4?style=for-the-badge&logo=microsoftsqlserver&logoColor=white"/>
+<img src="https://img.shields.io/badge/GitHub%20Pages-Live-22c55e?style=for-the-badge&logo=github&logoColor=white"/>
+<img src="https://img.shields.io/badge/Roles-4%20POV-6366f1?style=for-the-badge"/>
+
+<br/><br/>
+
+# 🚕 RideShare DB — Interactive Dashboard
+
+### A role-aware web dashboard built on top of a complete SQL Server ride-sharing database
+
+<br/>
+
+**[🌐 Open Live Dashboard →](https://naremanukiian.github.io/RideShareDBWeb)**&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;**[🗄️ View SQL Repository →](https://github.com/naremanukiian/RideSharingDBSystem)**
+
+<br/>
+
+</div>
+
+---
+
+## What is this?
+
+This repository hosts the **interactive web dashboard** for the RideSharingDB project — a complete SQL Server database system for a ride-sharing platform.
+
+The dashboard is built from real data extracted directly from [`ride_sharing.sql`](https://github.com/naremanukiian/RideSharingDBSystem) and runs entirely in the browser with no backend or server required. It lets you explore the database from **four different role perspectives**, each showing exactly what that SQL login can access in SQL Server.
+
+> 📦 Looking for the SQL script, schema, triggers, and stored procedures?
+> **[→ naremanukiian/RideSharingDBSystem](https://github.com/naremanukiian/RideSharingDBSystem)**
 
 ---
 
 ## 🌐 Live Demo
 
-**[→ View the Interactive Dashboard](https://naremanukiian.github.io/RideSharingDBSystem)**
+**[https://naremanukiian.github.io/RideShareDBWeb](https://naremanukiian.github.io/RideShareDBWeb)**
 
-The dashboard is a fully interactive web interface built directly from the SQL data. Select your role and explore the database from four different perspectives:
-
-| Role | SQL Login | Access |
-|------|-----------|--------|
-| 🧑 Passenger | `ride_app` | My rides, payments, promo codes |
-| 🚗 Driver | `ride_app` | My trips, earnings, ratings, vehicle |
-| 📊 Analyst | `ride_report` | All data — read-only analytics |
-| 🛡 DBA Admin | `ride_dba` | Full system — schema, triggers, procedures, DCL |
-
-No installation needed — runs entirely in the browser.
+No installation. No login. Open in any browser and select your role.
 
 ---
 
-## 📁 Repository Structure
+## 🎭 Role-Based Access
+
+The first screen lets you choose which role to enter as. Each role has its own colour theme, navigation, and data access — matching the actual SQL Server permissions defined in the database.
+
+<br/>
+
+| Role | SQL Login | Colour | What You Can See |
+|------|-----------|--------|-----------------|
+| 🧑 **Passenger** | `ride_app` | Cyan | Your rides, payments, available drivers, promo codes |
+| 🚗 **Driver** | `ride_app` | Green | Your trips, earnings, ratings, vehicle details |
+| 📊 **Analyst** | `ride_report` | Amber | All data read-only — revenue, city analytics, driver summaries |
+| 🛡️ **DBA Admin** | `ride_dba` | Purple | Everything — schema, triggers, procedures, DCL, full data |
+
+> **Passenger** and **Driver** both use the `ride_app` SQL login. In a real system, the application layer filters by the logged-in user's ID. The underlying database permissions are the same — the POV is different.
+
+---
+
+## 📂 Files in This Repository
 
 ```
-RideSharingDBSystem/
-│
-├── ride_sharing.sql   ← Complete SQL Server script (1,279 lines)
-│
-├── index.html               ← Dashboard web app
-├── style.css                ← Styles
-├── app.js                   ← Application logic
-└── data.js                  ← Pre-extracted database data (JSON)
+RideShareDBWeb/
+├── index.html      — Role selector screen + all 9 dashboard views
+├── style.css       — Full design system, dark theme, role colour themes
+├── app.js          — All rendering logic, navigation, chart builders
+└── data.js         — All real data extracted from ride_sharing.sql
 ```
 
----
-
-## 🗄️ Database Overview
-
-**DBMS:** Microsoft SQL Server 2019+ (T-SQL · SSMS 22)
-
-| Component | Count | Details |
-|-----------|-------|---------|
-| Tables | 8 | users, drivers, vehicles, locations, rides, payments, ratings, promocodes |
-| Records | 336 | 42 rows per table (40 for ratings) |
-| Foreign Keys | 9 | With CASCADE and NO ACTION constraints |
-| CHECK Constraints | 12 | Enum values, ranges, email format |
-| UNIQUE Constraints | 6 | Email, LicenseNumber, PlateNumber, Code, RideID in ratings |
-| Indexes | 15 | Non-clustered on high-traffic columns |
-| Views | 8 | vw_ride_details, vw_driver_summary, vw_revenue_by_city, and more |
-| Triggers | 7 | AFTER + INSTEAD OF — business rules at engine level |
-| Stored Procedures | 8 | Full application operation coverage |
-| DQL Queries | 30 | All 7 relational algebra operations |
-| DCL Users | 3 | ride_app, ride_report, ride_dba |
+Everything runs client-side. GitHub Pages serves these four static files — no server, no database connection, no build step.
 
 ---
 
-## 🏗️ Schema
+## 🗄️ About the Database
 
+The data powering this dashboard comes from a complete SQL Server implementation. Here is a summary:
+
+| Component | Count |
+|-----------|-------|
+| Tables | 8 |
+| Rows | 336 total (42 per table, 40 for ratings) |
+| Foreign Keys | 9 |
+| CHECK Constraints | 12 |
+| UNIQUE Constraints | 6 |
+| Non-Clustered Indexes | 15 |
+| Views | 8 |
+| Triggers | 7 |
+| Stored Procedures | 8 |
+| DQL Queries | 30 (all 7 relational algebra operations) |
+| DCL User Roles | 3 |
+
+**Tables:** `users` · `drivers` · `vehicles` · `locations` · `rides` · `payments` · `ratings` · `promocodes`
+
+**Cities:** New York · Chicago · Los Angeles · San Francisco
+
+**Revenue:** $940.75 total · $23.52 average fare · 31.4 min average duration
+
+---
+
+## 📊 Dashboard Pages by Role
+
+### 🧑 Passenger View
+- **My Rides** — Personal trip history with driver names, locations, fares, promo codes applied, and status
+- **Book a Ride** — All currently available drivers with vehicle details (`sp_available_drivers`)
+- **My Payments** — Personal payment history with method and status
+- **Promo Codes** — Active non-expired discount codes (`vw_active_promos`)
+
+### 🚗 Driver View
+- **My Trips** — All completed rides with passenger names, routes, fares, and durations
+- **Earnings** — Monthly earnings breakdown and summary stats (`sp_driver_earnings`)
+- **My Ratings** — Passenger feedback with driver and user ratings (`trg_update_driver_rating`)
+- **My Vehicle** — Registered vehicle details from the `vehicles` table
+
+### 📊 Analyst View
+- **Overview** — Revenue by city, payment methods, ride status distribution, top 5 drivers
+- **All Rides** — Full dataset from `vw_ride_details` with all names resolved
+- **All Drivers** — Full driver roster from `vw_driver_summary`
+- **Revenue** — City revenue table + top earner leaderboard (`vw_revenue_by_city`)
+- **Users** — All 42 registered users
+
+### 🛡️ DBA View
+All Analyst pages plus:
+- **Schema** — All 8 table structures with PKs, FKs, and constraints
+- **Triggers** — All 7 triggers with BR references, event types, and descriptions
+- **Procedures** — All 8 stored procedures with parameters
+- **Access Control** — All 3 DCL roles with permissions and the SSMS verification query
+
+---
+
+## 🔗 Related Repository
+
+> ### [naremanukiian/RideSharingDBSystem](https://github.com/naremanukiian/RideSharingDBSystem)
+>
+> The full SQL Server implementation — `ride_sharing.sql` (1,279 lines, zero errors).
+>
+> Contains: DDL · DML (42 rows/table) · 15 Indexes · 8 Views · 7 Triggers · 8 Stored Procedures · 30 DQL Queries · DCL (3 roles) · Full 3NF normalisation · Complete project report and documentation
+
+---
+
+## 🚀 Deploy Your Own Copy
+
+```bash
+# 1. Fork or clone this repo
+git clone https://github.com/naremanukiian/RideShareDBWeb.git
+
+# 2. No build step needed — open index.html directly in a browser
+# OR push to GitHub and enable Pages:
+# Settings → Pages → Source → main branch / root
 ```
-users ──────────────────────────────────────────── rides
-drivers ──────── vehicles                            │
-locations (×2 — start + end) ────────────────────── │
-promocodes (optional FK) ────────────────────────── │
-                                                     ├── payments
-                                                     └── ratings
-```
 
-**Normalisation:** Full 3NF — all transitive dependencies eliminated.
+That is all. Four static files, works everywhere.
 
 ---
 
-## ⚡ Triggers — Business Rules at Engine Level
+## 🛠️ Tech Stack
 
-| Trigger | Table | Type | Rule |
-|---------|-------|------|------|
-| `trg_calc_duration` | rides | AFTER UPDATE | Auto-computes RideDuration |
-| `trg_update_driver_rating` | ratings | AFTER INSERT | Recalculates driver avg rating |
-| `trg_driver_busy_on_ride` | rides | AFTER INSERT | Sets driver Busy on new ride |
-| `trg_driver_available_on_complete` | rides | AFTER UPDATE | Resets driver to Available |
-| `trg_no_concurrent_rides` | rides | INSTEAD OF INSERT | Blocks duplicate active rides |
-| `trg_validate_payment_ride` | payments | INSTEAD OF INSERT | Blocks payment on cancelled rides |
-| `trg_prevent_delete_completed` | rides | AFTER DELETE | ROLLBACK on completed ride delete |
-
----
-
-## 🔐 Access Control (DCL)
-
-```sql
--- App user: read/write, no delete
-GRANT SELECT, INSERT, UPDATE ON SCHEMA::dbo TO ride_app;
-DENY  DELETE                  ON SCHEMA::dbo TO ride_app;
-
--- Report user: read only
-GRANT SELECT ON SCHEMA::dbo TO ride_report;
-
--- DBA: full control
-ALTER ROLE db_owner ADD MEMBER ride_dba;
-```
+| Layer | Technology |
+|-------|-----------|
+| Database | Microsoft SQL Server 2019+ · T-SQL |
+| IDE | SQL Server Management Studio (SSMS) 22 |
+| Frontend | Vanilla HTML · CSS · JavaScript — no frameworks |
+| Fonts | Inter · JetBrains Mono (Google Fonts) |
+| Hosting | GitHub Pages |
+| Data | Extracted from `ride_sharing.sql` into `data.js` |
 
 ---
 
-## 🚀 How to Deploy
+<div align="center">
 
-1. Open **SSMS 22** and connect to SQL Server
-2. Open `ride_sharing.sql`
-3. Press **Ctrl + Shift + Enter**
-4. Script is idempotent — safe to run multiple times
+**[🌐 Open Dashboard](https://naremanukiian.github.io/RideShareDBWeb)** &nbsp;·&nbsp; **[🗄️ SQL Repository](https://github.com/naremanukiian/RideSharingDBSystem)**
 
----
+<br/>
 
-## 🌐 Live Dashboard
+*SQL Server 2019+ · T-SQL · SSMS 22 · Full 3NF · Zero errors · GitHub Pages*
 
-The interactive dashboard at **[naremanukiian.github.io/RideSharingDBSystem](https://naremanukiian.github.io/RideSharingDBSystem)** runs entirely in the browser. All data was extracted directly from `ride_sharing.sql`. The four role views match what each SQL login can actually access in SQL Server.
-
----
-
-*SQL Server 2019+ · T-SQL · SSMS 22 · Full 3NF · Zero errors*
+</div>
